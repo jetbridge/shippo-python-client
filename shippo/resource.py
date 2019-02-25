@@ -183,6 +183,8 @@ class CreateableAPIResource(APIResource):
     def create(cls, api_key=None, **params):
         requestor = api_requestor.APIRequestor(api_key)
         url = cls.class_url()
+        if 'asynchronous' in params:
+            params['async'] = params['asynchronous']
         response, api_key = requestor.request('post', url, params)
         return convert_to_shippo_object(response, api_key)
 
